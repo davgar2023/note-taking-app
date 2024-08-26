@@ -1,0 +1,36 @@
+<%- include('partials/header', { title: 'Login - Note-Taking App' }) %>
+<main>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h3 class="card-title text-center mb-4">Login</h3>
+                            <div class="mb-3" class="input-group">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                <small id="emailError" class="error-message"></small>
+                            </div>
+                            <div class="mb-3" class="input-group">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                                <small id="passwordError" class="error-message"></small>
+                            </div>
+                            <button id="loginButton" class="btn btn-primary w-100">Login</button>
+                        
+                        <div class="text-center mt-3">
+                            <p>Don't have an account? <a href="/register" class="btn btn-link">Register here</a></p>
+                        </div>
+                         <!-- Badge for feedback messages -->
+                         <div id="feedbackMessage" class="text-center mt-3">
+                            <span id="feedbackBadge" class="badge d-none"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="../scripts/utilities/validators.js"></script>
+<script src="/scripts/login.js"></script>
+<%- include('partials/footer') %>

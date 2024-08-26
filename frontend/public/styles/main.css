@@ -1,0 +1,99 @@
+/* Set the base font for the entire page */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Add margin below the form for spacing */
+form {
+  margin-bottom: 20px;
+}
+
+/* Make all labels display as blocks with some top margin for spacing */
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+/* Style input fields and textareas: Full width with padding and margin */
+input, textarea {
+  width: 100%; /* Ensure the input/textarea takes the full width of its container */
+  padding: 8px; /* Add padding inside the input/textarea for better readability */
+  margin-top: 5px; /* Add space above the input/textarea */
+}
+
+/* Style the button: Padding, background color, and white text */
+button {
+  padding: 10px 20px; /* Add padding inside the button */
+  background-color: #007bff; /* Primary blue color for the button */
+  color: white; /* White text color */
+  border: none; /* Remove the default border */
+  cursor: pointer; /* Show pointer cursor when hovering over the button */
+}
+
+/* Change button color when hovering */
+button:hover {
+  background-color: #0056b3; /* Darker blue color on hover */
+}
+
+/* Style for error messages: Red color, smaller font size, and hidden by default */
+.error-message {
+  color: red; /* Set error message text color to red */
+  font-size: 0.8em; /* Reduce the font size for error messages */
+  display: none; /* Initially hide the error message until needed */
+}
+
+/* Let the title column auto-adjust its width */
+td.text-wrap-title {
+  white-space: nowrap;          /* Prevent the title from wrapping onto a new line */
+  max-width: 100px;             /* Let the title take as much space as needed */
+  overflow: hidden;             /* Hide any overflow */
+  text-overflow: ellipsis;      /* Display ellipsis if the title overflows */
+}
+
+/* Ensure content wraps properly and stays within a fixed width */
+td.text-wrap-content {
+  word-wrap: break-word;        /* Ensure content wraps correctly */
+  word-break: break-all;        /* Break long words if necessary */
+  max-width: 300px;             /* Fix the width of the content column */
+  white-space: normal;          /* Allow content to wrap */
+  overflow: hidden;             /* Hide overflow content */
+  text-overflow: ellipsis;      /* Display ellipsis when content overflows */
+}
+
+/* Make sure the table stays responsive and doesn't break the layout */
+.table-responsive {
+  overflow-x: auto;             /* Enable horizontal scrolling on small screens */
+  width: 100%;                  /* Ensure table takes up full width */
+  display: block;               /* Ensure responsiveness */
+}
+
+/* Scrollable tbody */
+tbody {
+  display: block;
+  max-height: 300px;            /* Set the height for the scrollable area */
+  overflow-y: auto;             /* Enable vertical scrolling */
+  width: 100%;
+}
+
+/* Ensure table columns are aligned properly */
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: auto;           /* Allow table columns to adjust dynamically */
+}
+
+table {
+  table-layout: auto;           /* Allow table columns to adjust dynamically */
+  width: 100%;                  /* Full width table */
+}
+
+/* Ensure buttons are properly spaced and responsive */
+.btn-group {
+  display: flex;                /* Align buttons horizontally */
+  justify-content: space-between; /* Space between buttons */
+  flex-wrap: wrap;              /* Wrap buttons on small screens */
+}
+
+.btn-group .btn {
+  margin: 2px;                  /* Small margin between buttons */
+}
