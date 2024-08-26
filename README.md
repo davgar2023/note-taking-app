@@ -84,7 +84,7 @@ note-taking-app/
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/note-taking-app.git
+    git clone https://github.com/davgar2023/note-taking-app.git
     ```
 
 2. **Navigate into the project directory:**
