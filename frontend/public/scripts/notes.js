@@ -6,7 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const noteAddButton = document.getElementById('note-add');
   const noteUpdateButton = document.getElementById('note-update');
   const noteIdInput = document.getElementById('note-id');
+  const cancelButton = document.getElementById('cancel-edit');
+  const titleError = document.getElementById('title-error');
+  const contentError = document.getElementById('content-error');
+  const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+  const confirmDeleteButton = document.getElementById('confirmDeleteButton');
 
+
+  let noteIdDelete = null;
   let currentPage = 1;
   const notesPerPage = 10;
 
@@ -15,14 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-    const titleError = document.getElementById('title-error');
-    const contentError = document.getElementById('content-error');
-
-    // Clear previous errors
-    titleError.classList.remove('error-message');
-    contentError.classList.remove('error-message');
-    titleError.style.display = 'none';
-    contentError.style.display = 'none';
+  
+     //Call function celar error messaage
+     clearMessages();
 
     var valid = true;
 
@@ -68,43 +70,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Event listener for updating a note
   noteUpdateButton.addEventListener('click', async (e) => {
+
  
     const noteId = noteIdInput.value;
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-    const titleError = document.getElementById('title-error');
-    const contentError = document.getElementById('content-error');
 
-    // Clear previous errors
-    titleError.classList.remove('error-message');
-    contentError.classList.remove('error-message');
-    titleError.style.display = 'none';
-    contentError.style.display = 'none';
+    //Call function celar error messaage
+    clearMessages();
 
+    var valid = true;
 
-    try {
-      const response = await axios.put(`/api/notes/${noteId}`, {
-        title: title,
-        content: content
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-        withCredentials: true
-      });
-
-      if (response.status === 200) {
-        loadNotes(currentPage);
-        document.getElementById('title').value = '';
-        document.getElementById('content').value = '';
-        noteIdInput.value = ''; // Clear the hidden note ID
-        noteUpdateButton.classList.add('d-none'); // Hide update button
-        noteAddButton.classList.remove('d-none'); // Show add button
-      }
-    } catch (err) {
-      console.error('Error:', err);
+    // Validate title
+    if (title.trim().length < 3 || title.trim().length > 100) {
+        titleError.classList.add('error-message');
+        titleError.style.display = 'block';
+        valid = false;
     }
+
+    // Validate content
+    if (content.trim().length < 10) {
+        contentError.classList.add('error-message');
+        contentError.style.display = 'block';
+        valid = false;
+    }
+
+    if (valid) {
+
+      try {
+        const response = await axios.put(`/api/notes/${noteId}`, {
+          title: title,
+          content: content
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+          withCredentials: true
+        });
+
+        if (response.status === 200) {
+          loadNotes(currentPage);
+          document.getElementById('title').value = '';
+          document.getElementById('content').value = '';
+          noteIdInput.value = ''; // Clear the hidden note ID
+          noteUpdateButton.classList.add('d-none'); // Hide update button
+          noteAddButton.classList.remove('d-none'); // Show add button
+          cancelButton.classList.add('d-none'); // Hide cancel button
+          
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      }
+   }
+
   });
   
   // Function to load and display notes in the table
@@ -126,11 +145,11 @@ document.addEventListener('DOMContentLoaded', () => {
         notes.forEach((note, index) => {
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${index + 1 + (page - 1) * notesPerPage}</td>
+            <td class="index">${index + 1 + (page - 1) * notesPerPage}</td>
             <td class="text-wrap text-wrap-title">${note.title}</td>
             <td class="text-wrap text-wrap-content">${note.content}</td>
             <td>${new Date(note.createdAt).toLocaleDateString()}</td>
-            <td>
+            <td class="text-wrap text-wrap-action">
               <button class="btn btn-info btn-sm edit-btn" data-id="${note._id}" data-title="${note.title}" data-content="${note.content}">Edit</button>
               <button class="btn btn-danger btn-sm delete-btn" data-id="${note._id}">Delete</button>
             </td>
@@ -146,6 +165,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const noteId = e.target.getAttribute('data-id');
             const noteTitle = e.target.getAttribute('data-title');
             const noteContent = e.target.getAttribute('data-content');
+
+            //Call function celar error messaage
+            clearMessages();
+            
             
             document.getElementById('title').value = noteTitle;
             document.getElementById('content').value = noteContent;
@@ -153,16 +176,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
             noteAddButton.classList.add('d-none'); // Hide add button
             noteUpdateButton.classList.remove('d-none'); // Show update button
+            cancelButton.classList.remove('d-none'); // Show update button
+
+            cancelButton.addEventListener('click', async (e) => {
+
+              document.getElementById('title').value = '';
+              document.getElementById('content').value = '';
+              noteIdInput.value = '';
+
+              noteUpdateButton.classList.add('d-none'); // Hide update button
+              noteAddButton.classList.remove('d-none'); // Show add button
+              e.target.classList.add('d-none'); // Hide cancel button
+
+            });
           });
         });
 
         // Add event listeners to all delete buttons
         document.querySelectorAll('.delete-btn').forEach(button => {
-          button.addEventListener('click', async (e) => {
-            const noteId = e.target.getAttribute('data-id');
-            console.log(noteId);
-            await deleteNote(noteId);
+          button.addEventListener('click',  (e) => {
+            noteIdDelete = e.target.getAttribute('data-id');
+            console.log(noteIdDelete);
+
+            // Show the confirmation modal
+            confirmDeleteModal.show();
+
+
+            
           });
+        });
+
+       // confirm Delete row 
+        confirmDeleteButton.addEventListener('click', async () => {
+          if (noteIdDelete) {
+            await deleteNote(noteIdDelete);
+            confirmDeleteModal.hide();
+          }
         });
 
         // Update pagination
@@ -253,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial call to load notes on page load
   loadNotes(currentPage);
 
-
+// Function to exit the application
   const logoutButton = document.getElementById('logout-button');
 
         logoutButton.addEventListener('click', function() {
@@ -276,5 +325,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+   //Clear previous error messages 
+   const clearMessages = () => {
+
+            // Clear previous errors
+    titleError.classList.remove('error-message');
+    contentError.classList.remove('error-message');
+    titleError.style.display = 'none';
+    contentError.style.display = 'none';
+   }     
 
 });

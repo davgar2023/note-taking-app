@@ -42,25 +42,7 @@ button:hover {
   display: none; /* Initially hide the error message until needed */
 }
 
-/* Let the title column auto-adjust its width */
-td.text-wrap-title {
-  white-space: nowrap;          /* Prevent the title from wrapping onto a new line */
-  max-width: 100px;             /* Let the title take as much space as needed */
-  overflow: hidden;             /* Hide any overflow */
-  text-overflow: ellipsis;      /* Display ellipsis if the title overflows */
-}
-
-/* Ensure content wraps properly and stays within a fixed width */
-td.text-wrap-content {
-  word-wrap: break-word;        /* Ensure content wraps correctly */
-  word-break: break-all;        /* Break long words if necessary */
-  max-width: 300px;             /* Fix the width of the content column */
-  white-space: normal;          /* Allow content to wrap */
-  overflow: hidden;             /* Hide overflow content */
-  text-overflow: ellipsis;      /* Display ellipsis when content overflows */
-}
-
-/* Make sure the table stays responsive and doesn't break the layout */
+/* Ensure table columns are aligned properly */
 .table-responsive {
   overflow-x: auto;             /* Enable horizontal scrolling on small screens */
   width: 100%;                  /* Ensure table takes up full width */
@@ -68,23 +50,71 @@ td.text-wrap-content {
 }
 
 /* Scrollable tbody */
-tbody {
+.scrollable-tbody {
   display: block;
   max-height: 300px;            /* Set the height for the scrollable area */
   overflow-y: auto;             /* Enable vertical scrolling */
-  width: 100%;
 }
 
 /* Ensure table columns are aligned properly */
 thead, tbody tr {
   display: table;
   width: 100%;
-  table-layout: auto;           /* Allow table columns to adjust dynamically */
+  table-layout: fixed;          /* Ensure fixed table layout for consistent column width */
 }
 
+/* Ensure the entire table takes full width */
 table {
-  table-layout: auto;           /* Allow table columns to adjust dynamically */
   width: 100%;                  /* Full width table */
+  border-collapse: collapse;    /* Collapse table borders */
+}
+
+/* Header styles */
+th {
+  text-align: left;             /* Align text to the left in headers */
+  background-color: #f8f9fa;    /* Light background for headers */
+  padding: 5px;                 /* Padding for headers */
+}
+
+/* Index column styles */
+.header-index, td.index {
+  width: 70px;                 /* Set width for index column */
+  text-align: center;           /* Center align text */
+  
+}
+
+/* Title column styles */
+.header-title, td.text-wrap-title {
+  width: 100px;                 /* Set same width for title column */
+  white-space: nowrap;          /* Prevent title from wrapping */
+  overflow: hidden;             /* Hide overflow */
+  text-overflow: ellipsis;      /* Display ellipsis for overflowed text */
+  background-color: #ffffff;    /* White background for title column */
+  color: #007bff;               /* Blue text color for emphasis */
+  text-align: center;           /* Center align text */
+}
+
+/* Content column styles */
+.header-content, td.text-wrap-content {
+  width: 280px;                 /* Set width for content column */
+  word-wrap: break-word;        /* Ensure content wraps */
+  word-break: break-all;        /* Break long words */
+  white-space: normal;          /* Allow content to wrap */
+  overflow: hidden;             /* Hide overflow */
+  text-overflow: ellipsis;      /* Display ellipsis for overflowed text */
+  text-align: center;           /* Center align text */
+}
+
+/* Date column styles */
+.header-date, td {
+  width: 90px;                 /* Set width for date column */
+  text-align: center;           /* Center align text */
+}
+
+/* Actions column styles */
+.header-actions, td.text-wrap-action{
+  width: 100px;                 /* Set width for actions column */
+  text-align: center;           /* Center align text */
 }
 
 /* Ensure buttons are properly spaced and responsive */

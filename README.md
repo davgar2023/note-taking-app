@@ -7,12 +7,15 @@ A Node.js and MongoDB application for taking and managing notes. This app includ
 - [General info](#general-info)
 - [Technologies](#technologies)
 - [File Structure](#file-structure)
+- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Acknowledgments](#acknowledgments)
 
 
 ## General info
-This project is an application for taking and using cookies  
+
+The Note-Taking App is a full-stack application that allows users to create, read, update, and delete notes. Built with Node.js, Express, MongoDB, and EJS, it includes features like user authentication, secure routes, and a responsive design using Bootstrap.
 
 
 ## Technologies 
@@ -74,9 +77,18 @@ note-taking-app/
 │       └── notes.ejs
 │
 │-- .env
+│-- ADDITIONAL_NOTES.md
 │-- package.json
 │-- package-lock.json    
 └── README.md      
+
+## Features
+
+- User registration and authentication
+- CRUD operations for notes
+- Responsive front-end design using Bootstrap
+- Dynamic data handling with MongoDB
+- Server-side validation and error handling
 
 
 ## Installation
@@ -123,8 +135,14 @@ note-taking-app/
 
 ## Usage
 
-http://localhost:5000/
+After starting the server, open your browser and navigate to http://localhost:5000/
 
 the fist page taht will be displayed is Login , you can log in or register in the app.
 
 
+## Acknowledgments
+
+- Inspiration from various note-taking apps
+- Bootstrap for responsive design
+- Node.js and Express for backend development
+- MongoDB for database management
