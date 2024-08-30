@@ -1,5 +1,4 @@
 // test/authController.test.js
-
 require('dotenv').config();
 const mongoURI = process.env.MONGO_URI;
 const request = require('supertest');
@@ -40,16 +39,21 @@ describe('Auth Controller', () => {
         it('should register a new user and return a token', async () => {
             const mockUser = { name: 'John Doe', email: 'john@example.com', password: 'password123' };
             const mockToken = 'mocktoken';
+
+            // Mock database interactions
             User.findOne.mockResolvedValueOnce(null); // Mock no existing user
             User.prototype.save.mockResolvedValueOnce(mockUser); // Mock user save
+
+            // Mock token generation
             const { generateToken } = require('../backend/config/auth');
             generateToken.mockReturnValueOnce(mockToken); // Mock token generation
 
+            // Send a request to the register endpoint
             const response = await request(app)
                 .post('/register')
                 .send(mockUser);
 
-                debugger;  // The execution will pause here
+            // Assert the expected response
             expect(response.statusCode).toBe(200);
             expect(response.body.success).toBe(true);
             expect(response.body.msg).toBe(`Welcome : ${mockUser.name}`);
@@ -58,12 +62,16 @@ describe('Auth Controller', () => {
 
         it('should return an error if the user already exists', async () => {
             const mockUser = { name: 'John Doe', email: 'john@example.com', password: 'password123' };
+
+            // Mock database interactions
             User.findOne.mockResolvedValueOnce(mockUser); // Mock existing user
 
+            // Send a request to the register endpoint
             const response = await request(app)
                 .post('/register')
                 .send(mockUser);
 
+            // Assert the expected response
             expect(response.statusCode).toBe(400);
             expect(response.body.success).toBe(false);
             expect(response.body.msg).toBe('User already exists');
@@ -74,33 +82,42 @@ describe('Auth Controller', () => {
         it('should log in a user and return a token', async () => {
             const mockUser = { name: 'John Doe', email: 'john@example.com', password: 'hashedpassword' };
             const mockToken = 'mocktoken';
+
+            // Mock database interactions
             User.findOne.mockResolvedValueOnce(mockUser); // Mock user found
             const bcrypt = require('bcryptjs');
             bcrypt.compare.mockResolvedValueOnce(true); // Mock password match
+
+            // Mock token generation
             const { generateToken } = require('../backend/config/auth');
             generateToken.mockReturnValueOnce(mockToken); // Mock token generation
 
+            // Send a request to the login endpoint
             const response = await request(app)
                 .post('/login')
                 .send({ email: mockUser.email, password: 'password123' });
 
+            // Assert the expected response
             expect(response.statusCode).toBe(200);
             expect(response.body.success).toBe(true);
-           // expect(response.body.token).toBe(mockToken);
             expect(response.body.msg).toBe(`Welcome : ${mockUser.name}`);
             expect(response.headers['set-cookie'][0]).toContain('jwtToken=mocktoken');
         });
 
         it('should return an error if credentials are invalid', async () => {
             const mockUser = { name: 'John Doe', email: 'john@example.com', password: 'hashedpassword' };
+
+            // Mock database interactions
             User.findOne.mockResolvedValueOnce(mockUser); // Mock user found
             const bcrypt = require('bcryptjs');
             bcrypt.compare.mockResolvedValueOnce(false); // Mock password mismatch
 
+            // Send a request to the login endpoint
             const response = await request(app)
                 .post('/login')
                 .send({ email: mockUser.email, password: 'wrongpassword' });
 
+            // Assert the expected response
             expect(response.statusCode).toBe(400);
             expect(response.body.success).toBe(false);
             expect(response.body.msg).toBe('Invalid credentials');

@@ -10,7 +10,14 @@
  */
 const errorHandler = (err, req, res, next) => {
     console.error(err.stack); // Log the error stack trace
-    res.status(500).json({ msg: 'Server Error' }); // Respond with a 500 status code and a server error message
+      // If the token is invalid
+      if (req.headers.accept && req.headers.accept.includes('application/json')) {
+        res.status(500).json({ msg: 'Server Error' }); // Respond with a 500 status code and a server error message
+      } else {
+        // Otherwise, redirect to login page
+        return res.redirect('/login');
+      }
+   
   };
   
   module.exports = errorHandler;

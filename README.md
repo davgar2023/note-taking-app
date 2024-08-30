@@ -33,10 +33,7 @@ note-taking-app/
 ├── __test__
 │    ├── connectDB.test.js
 │    ├── jwtUtils.test.js
-│    ├── authController.test.js
-│    ├──
-│    ├──
-│    └──
+│    └── authController.test.js
 │
 ├── backend/
 │   ├── config/

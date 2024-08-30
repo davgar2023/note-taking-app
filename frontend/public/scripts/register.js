@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let hasError = false;
 
         // Validate the name: Check if the name is empty or doesn't meet the criteria
-        if (name === '' || !validateUsername(name)) {
+        if (name === '' || validateUsername(name)) {
             nameError.textContent = 'Name must be at least 3 characters.'; // Set error message
             nameError.style.display = 'block'; // Show the error message
             hasError = true; // Indicate an error was found

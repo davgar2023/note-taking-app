@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Redirect the user to the '/notes' page after 2 seconds
                 setTimeout(() => {
+                    feedbackBadge.classList.remove('bg-success'); // Remove success class if present
+                    feedbackBadge.classList.add('d-none'); // Add hidden class for styling
                     window.location.href = '/notes';
                 }, 2000);
             })

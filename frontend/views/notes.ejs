@@ -4,6 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10 col-sm-12">
                 <h1 class="text-center mb-4">Your Notes</h1>
+
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <input type="hidden" id="note-id"> <!-- Hidden field for the note ID -->
@@ -29,6 +30,10 @@
                 </div>
                 <div class="card shadow">
                     <div class="card-body">
+                         <!-- Search Input Field -->
+                        <div class="mb-4">
+                            <input type="text" id="search-input" class="form-control" placeholder="Search notes by title or content">
+                        </div>
                      
                         <table class="table table-hover table-responsive">
                             <thead>
