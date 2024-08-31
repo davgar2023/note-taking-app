@@ -108,7 +108,7 @@ note-taking-app/
     npm install
     ```
 
-4.  **Env Environment Variables**
+4. **Env Environment Variables**
 
    Open the `.env` file and add the following lines or writing your information please:
 
