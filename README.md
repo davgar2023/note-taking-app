@@ -108,6 +108,15 @@ note-taking-app/
     npm install
     ```
 
+  **Env Environment Variables**
+
+   Open the `.env` file and add the following lines:
+
+   ```plaintext
+   MONGO_URI=mongodb://127.0.0.1:27017/note-taking-app
+   PORT=5000
+   JWT_SECRET=Secret_key   
+
 4. **Start the server:**
 
     ```bash

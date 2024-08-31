@@ -11,11 +11,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
   const confirmDeleteButton = document.getElementById('confirmDeleteButton');
   const searchInput = document.getElementById('search-input'); // Search input field
+  const alertBox = document.getElementById('alert-box'); // Alert box element
 
   let noteIdDelete = null;
   let currentPage = 1;
   const notesPerPage = 10;
   let notes = [];  // Array to hold notes
+
+  // Function to show alert messages
+  const showAlert = (message, type) => {
+    alertBox.textContent = message;
+    alertBox.className = `alert alert-${type}`;
+    alertBox.classList.remove('d-none');
+
+    // Hide the alert after 3 seconds
+    setTimeout(() => {
+      alertBox.classList.add('d-none');
+    }, 3000);
+  };
+
 
   // Event listener for button submission
   noteAddButton.addEventListener('click', async (e) => {
@@ -58,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
           loadNotes(currentPage); // Reload notes after adding a new one
           document.getElementById('title').value = '';
           document.getElementById('content').value = '';
+          showAlert('Note added successfully!', 'success');
         }
       } catch (err) {
         console.error('Error:', err);
@@ -111,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
           noteUpdateButton.classList.add('d-none'); // Hide update button
           noteAddButton.classList.remove('d-none'); // Show add button
           cancelButton.classList.add('d-none'); // Hide cancel button
+          showAlert('Note updated successfully!', 'success');
         }
       } catch (err) {
         console.error('Error:', err);
@@ -221,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (response.status === 200) {
         loadNotes(currentPage); // Reload notes after deleting one
+        showAlert('Note deleted successfully!', 'danger');
       }
     } catch (err) {
       console.error('Error deleting note:', err);
