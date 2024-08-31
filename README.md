@@ -108,16 +108,16 @@ note-taking-app/
     npm install
     ```
 
-  **Env Environment Variables**
+4.  **Env Environment Variables**
 
-   Open the `.env` file and add the following lines:
+   Open the `.env` file and add the following lines or writing your information please:
 
    ```plaintext
    MONGO_URI=mongodb://127.0.0.1:27017/note-taking-app
    PORT=5000
    JWT_SECRET=Secret_key   
 
-4. **Start the server:**
+5. **Start the server:**
 
     ```bash
     npm start
@@ -141,9 +141,7 @@ note-taking-app/
 
 ## Usage
 
-After starting the server, open your browser and navigate to http://localhost:5000/
-
-the fist page taht will be displayed is Login , you can log in or register in the app.
+After starting the server, open your browser and navigate to http://localhost:5000/. The first page displayed will be the login page, where you can log in or register to access the note-taking features
 
 
 ## Acknowledgments
